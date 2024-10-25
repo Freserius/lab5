@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Лабораторная работа по JavaScript</title>
+    <script>
+        function pow(x, n) {
+            if (n < 1) {
+                return "Степень должна быть натуральным числом";
+            }
+            let result = 1;
+            for (let i = 0; i < n; i++) {
+                result *= x;
+            }
+            return result;
+        }
+
+        function gcd(a, b) {
+            if (a === 0) return b;
+            if (b === 0) return a;
+            while (b !== 0) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        function minDigit(x) {
+            if (isNaN(x)) return "Некорректный ввод";
+            let digits = String(x).split('').map(Number);
+            return Math.min(...digits);
+        }
+
+        function pluralizeRecords(n) {
+            if (isNaN(n) || n < 0) return "Введите корректное значение";
+            let word, preword;
+            if (n % 10 === 1 && n % 100 !== 11) {
+                preword = "была найдена";
+                word = "запись";
+            } else if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) {
+                preword = "было найдено";
+                word = "записи";
+            } else {
+                preword = "было найдено";
+                word = "записей";
+            }
+            return `В результате выполнения запроса ${preword} ${n} ${word}.`;
+        }
+
+        function fibb(n) {
+            if (isNaN(n) ||  n < 0 ||  n > 1000) return "Введите корректное значение (0 <= n <= 1000)";
+            if (n <= 1) return n;
+            let a = 0, b = 1;
+            for (let i = 2; i <= n; i++) {
+                let temp = a + b;
+                a = b;
+                b = temp;
+            }
+            return b;
+        }
+
+        function calculateResults() {
+            let x = parseInt(document.getElementById("x").value);
+            let n = parseInt(document.getElementById("n").value);
+            let a = parseInt(document.getElementById("a").value);
+            let b = parseInt(document.getElementById("b").value);
+            let min = parseInt(document.getElementById("min").value);
+            let note = parseInt(document.getElementById("note").value);
+            let fibIndex = parseInt(document.getElementById("fibIndex").value);
+
+            if (isNaN(x) ||  isNaN(n) ||  isNaN(a) ||  isNaN(b) || isNaN(fibIndex)) {
+                alert("Пожалуйста, заполните все поля корректными данными.");
+                return;
+            }
+
+            document.getElementById("powResult").innerText = `x^n = ${pow(x, n)}`;
+            document.getElementById("gcdResult").innerText = `НОД(a, b) = ${gcd(a, b)}`;
+            document.getElementById("minDigitResult").innerText = `Наименьшая цифра равна ${minDigit(min)}`;
+            document.getElementById("pluralResult").innerText = pluralizeRecords(note);
+            document.getElementById("fibbResult").innerText = `Число Фибоначчи F(${fibIndex}) = ${fibb(fibIndex)}`;
+        }
+    </script>
+</head>
+<body>
+    <header>
+    <h1>Лабораторная работа по JavaScript</h1>
+</header>
+    <div>
+        <label for="x">Введите основание степени x:</label>
+        <input type="number" id="x" name="x"><br>
+
+        <label for="n">Введите степень n:</label>
+        <input type="number" id="n" name="n"><br>
+
+        <label for="a">Введите число a (для НОД(a, b)):</label>
+        <input type="number" id="a" name="a"><br>
+
+        <label for="b">Введите число b (для НОД(a, b)):</label>
+        <input type="number" id="b" name="b"><br>
+
+        <label for="min">Введите число для определения его наименьшей цифры:</label>
+        <input type="number" id="min" name="min"><br>
+
+        <label for="note">Введите число для плюрализации:</label>
+        <input type="number" id="note" name="note"><br>
+<label for="fibIndex">Введите индекс числа Фибоначчи:</label>
+        <input type="number" id="fibIndex" name="fibIndex"><br>
+    </div>
+    
+    <button onclick="calculateResults()">Выполнить</button>
+    
+    <h2>Результаты:</h2>
+    <p id="powResult"></p>
+    <p id="gcdResult"></p>
+    <p id="minDigitResult"></p>
+    <p id="pluralResult"></p>
+    <p id="fibbResult"></p>
+</body>
+</html>
